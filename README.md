@@ -28,7 +28,8 @@ This repository provides library files for Rysen ApexHand (including x86_64 and 
 │   └── README.md
 ├── docs
 │   ├── apexhand_1.0_tactile_array.md
-│   └── apexhand_1.0_tactile_array_en.md
+│   ├── apexhand_1.0_tactile_array_en.md
+│   └── download_docker.md
 ├── install_rysen_deps.sh
 ├── LICENSE
 ├── python
@@ -115,6 +116,8 @@ We highly recommend using the intelligent environment startup script we provide.
 ### 0. Prerequisite: Install and Run Docker
 
 Before executing the startup script, **ensure that Docker matching your processor architecture is installed in your system and the Docker background service (Daemon) is running.**
+
+> 🐳 For Ubuntu 22.04, follow our step-by-step guide: [Install Docker on Ubuntu 22.04](docs/download_docker.md).
 
 ### 1. Offline/Low-Bandwidth Deployment (Skip If Your Network Is Stable)
 

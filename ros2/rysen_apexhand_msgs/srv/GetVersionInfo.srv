@@ -3,3 +3,5 @@ string ip
 string sdk_version
 string hand_firmware_version
 string touch_sensor_version
+# 示教器版本（仅 rysen_box 场景返回，其他后端返回空字符串）
+string teach_controller_version

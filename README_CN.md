@@ -67,7 +67,8 @@
 │   └── README.md
 ├── docs
 │   ├── apexhand_1.0_tactile_array.md
-│   └── apexhand_1.0_tactile_array_en.md
+│   ├── apexhand_1.0_tactile_array_en.md
+│   └── download_docker.md
 ├── install_rysen_deps.sh
 ├── LICENSE
 ├── python
@@ -116,6 +117,8 @@
 ### 0. 必备前提：安装并运行 Docker
 
 在执行启动脚本之前，**必须确保您的系统中已安装与您处理器架构相匹配的 Docker，并且 Docker 后台服务（Daemon）正在运行。**
+
+> 🐳 Ubuntu 22.04 用户可参考详细教程：[Ubuntu 22.04 安装 Docker](docs/download_docker.md)。
 
 
 ### 1. 离线/弱网环境部署（网络正常可跳过）

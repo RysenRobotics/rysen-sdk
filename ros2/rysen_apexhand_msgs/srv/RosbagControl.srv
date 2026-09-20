@@ -1,0 +1,19 @@
+# 命令枚举定义
+uint8 CMD_START_RECORD = 0
+uint8 CMD_STOP_RECORD = 1
+uint8 CMD_START_PLAYBACK = 2
+uint8 CMD_STOP_PLAYBACK = 3
+
+# 请求参数
+uint8 command           # 填入上述的枚举值
+string ip               # 目标手的 IP
+string folder_path      # 目标路径（留空则走我们的智能默认路径）
+float64 value           # 录制：observation 最大采样频率(Hz，<=0 默认100)；动作回播：speed_ratio
+# 录制传 []（或仅包含空白字符串）默认 observation=[joint_states, hand_tactile_forces] +
+# action=[move_j_position_follow_command]。
+# 动作回播留空默认只回播 move_j_position_follow_command；反馈话题禁止用于动作回播。
+string[] topics
+---
+# 响应参数
+bool success
+string message

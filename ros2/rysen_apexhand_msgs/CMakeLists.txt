@@ -23,6 +23,9 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/ThumbFingerTactile.msg"
   "msg/HandTactileForces.msg"
   "msg/HardwareErrors.msg"
+  "msg/ChoreographyStatus.msg"
+  "srv/StartChoreography.srv"
+  "srv/ControlChoreography.srv"
   "srv/MoveJoint.srv"
   "srv/SetFingerEnabled.srv"
   "srv/SetDeviceIPAddress.srv"
@@ -33,12 +36,14 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/SetMaxFingerTorque.srv"
   "srv/StartTactileCalibration.srv"
   "srv/StartTeleop.srv"
+  "srv/ManusCalibration.srv"
   "srv/ClearTactileCalibration.srv"
   "srv/CleanFaults.srv"
   "srv/GetConnectionInfo.srv"
   "srv/GetVersionInfo.srv"
   "srv/RemoveHand.srv"
   "srv/IsFingerEnabled.srv"
+  "srv/RosbagControl.srv"
   DEPENDENCIES std_msgs sensor_msgs geometry_msgs builtin_interfaces
 )
 
