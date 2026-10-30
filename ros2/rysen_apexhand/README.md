@@ -55,7 +55,7 @@ In Foxglove Studio, open **Open connection → Foxglove WebSocket** and fill in 
 | Topic | Type | Description |
 |---|---|---|
 | `rysen/apexhand/<ip_key>/move_j_position_follow_command` | `sensor_msgs/msg/JointState` | Smooth position follow (`name`+`position`) |
-| `rysen/apexhand/<ip_key>/move_j_control_follow_command` | `sensor_msgs/msg/JointState` | Direct control follow: `position` / `velocity` / `effort`(acceleration or current substitute); shares follow owner with position follow |
+| `rysen/apexhand/<ip_key>/move_j_control_follow_command` | `sensor_msgs/msg/JointState` | Direct control follow: `position` / `velocity` / `effort` (acceleration); shares follow owner with position follow |
 
 ## Services
 

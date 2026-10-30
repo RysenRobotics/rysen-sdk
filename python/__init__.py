@@ -8,7 +8,6 @@ Use of this source code is governed by a BSD 3-Clause license that can be
 found in the LICENSE file.
 """
 
-from .rysen_apexhand_sdk import *
+from .rysen_apexhand_sdk import _sdk as _native_sdk
 
-__version__ = "1.5.4"
-
+__version__ = _native_sdk.__version__

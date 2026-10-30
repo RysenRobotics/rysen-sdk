@@ -66,9 +66,11 @@
 │   ├── Dockerfile.rysen_sdk.arm64
 │   └── README.md
 ├── docs
+│   ├── API_GUIDE_en.md
 │   ├── apexhand_1.0_tactile_array.md
 │   ├── apexhand_1.0_tactile_array_en.md
-│   └── download_docker.md
+│   ├── download_docker.md
+│   └── mitModeInstruction_en.md
 ├── install_rysen_deps.sh
 ├── LICENSE
 ├── python
@@ -104,7 +106,6 @@
 ├── urdf
 │   ├── apex_hand_left.urdf
 │   └── apex_hand_right.urdf
-└── VERSION
 
 ```
 
@@ -245,8 +246,8 @@ ros2 run rysen_apexhand rysen_apexhand_ros_example_node_exe --ip 192.168.0.103
 > 📖 **详细说明请参考**：
 > * [ros2/rysen_apexhand_msgs/README.md](ros2/rysen_apexhand_msgs/README.md) - 消息和服务定义
 > * [ros2/rysen_apexhand/README.md](ros2/rysen_apexhand/README.md) - ROS2 节点使用说明
-> 
-> 
+>
+>
 
 ---
 
@@ -258,8 +259,8 @@ ros2 run rysen_apexhand rysen_apexhand_ros_example_node_exe --ip 192.168.0.103
 > 请按照以下步骤，将您的宿主机有线网卡配置到 192.168.0.x 网段：
 > 将机械手通过网线物理连接至主机的有线网口。
 > 1. 打开 Ubuntu 的 设置 (Settings) -> 网络 (Network) -> 找到您的 有线连接 (Wired) 并点击齿轮设置图标。
-> 
-> 
+>
+>
 > 2. 切换到 IPv4 标签页。
 > 3. 将 IPv4 方法从“自动(DHCP)”更改为 手动 (Manual)。
 > 4. 在地址栏中填入以下信息：
@@ -268,7 +269,7 @@ ros2 run rysen_apexhand rysen_apexhand_ros_example_node_exe --ip 192.168.0.103
 > 5. 点击右上角的“应用 (Apply)”，然后关闭并重新打开网络开关使设置生效。
 >
 >
-                   
+
 **注意事项**:
 1. 确保机器人和主机在同一网络中。
 2. 防火墙允许相关端口通信。
@@ -303,6 +304,8 @@ ros2 run rysen_apexhand rysen_apexhand_ros_example_node_exe --ip 192.168.0.103
 ## 📚 更多信息
 
 * **ApexHand 1.0 触觉阵列说明**: Taxel 布局、有效索引及左右手掌心映射请参考 [docs/apexhand_1.0_tactile_array.md](docs/apexhand_1.0_tactile_array.md)
+* **SDK API 指南**: 公开 C++ API 参考、错误码与使用约定请参考 [docs/API_GUIDE_en.md](docs/API_GUIDE_en.md)（英文）
+* **MIT 模式使用说明**: 力矩上限、阻抗增益与 MIT 模式用法请参考 [docs/mitModeInstruction_en.md](docs/mitModeInstruction_en.md)（英文）
 * **C++ API 文档**: 参考 [cpp/README.md](cpp/README.md) 和 `cpp/rysen_example.cpp` 中的注释
 * **Python API 文档**: 参考 [python/README.md](python/README.md)
 * **ROS2 API 文档**: 参考 [ros2/rysen_apexhand/README.md](ros2/rysen_apexhand/README.md)

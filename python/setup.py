@@ -20,6 +20,7 @@ from setuptools import setup
 import os
 import shutil
 import sys  
+import platform
 
 # Get the directory containing this file (python/)
 here = os.path.abspath(os.path.dirname(__file__))
@@ -40,26 +41,37 @@ if is_packaging and os.path.exists(sdk_lib_src):
 else:
     print(f"🔧 开发/元数据模式：跳过同步动态库...")
 
-# Read version from VERSION file (single source of truth), fallback to __init__.py, then default
-version = "1.5.4"  # Default fallback version (updated by update_version.sh)
+# The prebuilt binding is the version authority for a delivery package. Its
+# `__version__` value is injected from RYSEN_SDK_VERSION while compiling
+# sdk/python/python_bindings.cpp. Do not depend on an external VERSION file or
+# import the high-level wrapper merely to obtain package metadata.
+machine = platform.machine()
+if machine == "x86_64":
+    native_arch = "x86_64"
+elif machine in ("aarch64", "arm64"):
+    native_arch = "aarch64"
+else:
+    raise SystemExit(f"Unsupported architecture for the prebuilt Rysen SDK: {machine}")
+
+native_lib_dir = os.path.join(here, "..", "rysen_sdk", "lib", native_arch)
+if not os.path.isdir(native_lib_dir):
+    raise SystemExit(
+        f"Prebuilt Rysen SDK libraries not found: {native_lib_dir}. "
+        "A delivery package must include rysen_sdk/lib/<architecture>/ with its shared libraries."
+    )
+if native_lib_dir not in sys.path:
+    sys.path.insert(0, native_lib_dir)
 try:
-    # First try to read from VERSION file (project root)
-    version_file = os.path.join(here, "..", "..", "VERSION")
-    if os.path.exists(version_file):
-        with open(version_file, "r") as f:
-            version = f.read().strip()
-    else:
-        # Fallback to __init__.py
-        init_file = os.path.join(here, "__init__.py")
-        if os.path.exists(init_file):
-            with open(init_file, "r") as f:
-                for line in f:
-                    if "__version__" in line:
-                        # Extract version from: __version__ = "0.1.0"
-                        version = line.split("=")[1].strip().strip('"').strip("'")
-                        break
-except Exception:
-    pass
+    import _rysen_sdk as _native_sdk
+except Exception as exc:
+    raise SystemExit(
+        "Unable to load the prebuilt _rysen_sdk binding to determine the package version. "
+        "A delivery package must include rysen_sdk/lib/<architecture>/ with its shared libraries."
+    ) from exc
+
+version = getattr(_native_sdk, "__version__", None)
+if not isinstance(version, str) or not version:
+    raise SystemExit("The prebuilt _rysen_sdk binding does not expose a valid __version__.")
 
 # Read long description from README if available
 long_description = ""
