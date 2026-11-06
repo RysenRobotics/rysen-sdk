@@ -12,6 +12,7 @@
 #ifndef RYSEN_APEXHAND_SDK_INCLUDE_RYSEN_APEXHAND_SDK_H_
 #define RYSEN_APEXHAND_SDK_INCLUDE_RYSEN_APEXHAND_SDK_H_
 
+#include <cstdint>
 #include <functional>
 #include <memory>
 #include <optional>
@@ -75,6 +76,19 @@ class RYSEN_API Rysen {
    * @return false 连接失败
    */
   ErrorCode Connect(const std::string& address, ConnectionType type = ConnectionType::CONNECTION_TYPE_ETHERNET);
+  /**
+   * @brief Configure the host control-frame and data-receive frequency.
+   *
+   * The same frequency is applied to the control thread and the data-receive
+   * thread. This method must be called before Connect(); the SDK uses 1000 Hz
+   * when it is not called. User callbacks default to 100 Hz and cannot exceed
+   * this control/data frequency.
+   *
+   * @param frequency_hz Integer frequency in the inclusive range [100, 1000].
+   * @return ERROR_CODE_OK on success; ERROR_CODE_INVALID_ARGUMENT when outside
+   * the supported range; ERROR_CODE_CONFIG_ERROR after Connect().
+   */
+  ErrorCode SetControlAndDataFrequency(uint32_t frequency_hz);
   /**
    * @brief 设置设备网络参数（IP/子网掩码/网关）
    * @note 需要先建立连接。设备返回成功应答后生效。
@@ -236,6 +250,7 @@ class RYSEN_API Rysen {
    * @brief 注册关节状态回调函数
    *
    * @param cb 关节状态回调函数
+   * @param freq_hz 回调频率，默认 100 Hz；不得超过连接前设置的控制/数据的循环频率。
    * @return ERROR_CODE_OK 表示注册成功；空句柄返回 ERROR_CODE_INVALID_ARGUMENT，
    * 请使用 UnregisterGetJointStatesCallback() 注销。
    */
@@ -274,7 +289,7 @@ class RYSEN_API Rysen {
    * @brief 注册电机状态回调函数
    *
    * @param cb 电机状态回调函数
-   * @param freq_hz 回调频率 默认100Hz
+   * @param freq_hz 回调频率，默认 100 Hz；不得超过连接前设置的控制/数据的循环频率。
    * @return ERROR_CODE_OK 表示注册成功；空句柄返回 ERROR_CODE_INVALID_ARGUMENT，
    * 请使用 UnregisterGetMotorStatesCallback() 注销。
    */
@@ -290,7 +305,7 @@ class RYSEN_API Rysen {
    * @brief 注册手传感器图像回调函数
    *
    * @param cb 手传感器图像回调函数
-   * @param freq_hz 回调频率 默认100Hz
+   * @param freq_hz 回调频率，默认 100 Hz；不得超过连接前设置的控制/数据的循环频率。
    * @return ERROR_CODE_OK 表示注册成功；空句柄返回 ERROR_CODE_INVALID_ARGUMENT，
    * 请使用 UnregisterGetHandSensorImageCallback() 注销。
    */

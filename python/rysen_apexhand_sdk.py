@@ -659,6 +659,28 @@ class Rysen:
         # 如果类型都合法，才给底层的 _rysen_sdk (也就是 pybind11) 去处理
         return self._sdk.connect(address, connection_type)
 
+    def set_control_and_data_frequency(self, frequency_hz: int) -> ErrorCode:
+        """
+        Configure the shared control-frame and data-receive frequency for the next connection.
+
+        设置下一次连接使用的控制帧/数据接收统一频率。
+
+        This function must be called before :meth:`connect`. The valid range is
+        100--1000 Hz (integer). If omitted, the SDK uses 1000 Hz. State and
+        image callbacks default to 100 Hz and may not exceed this frequency.
+
+        Args:
+            frequency_hz: Loop frequency in Hz, from 100 to 1000 inclusive.
+
+        Returns:
+            ErrorCode: ERROR_CODE_OK on success; ERROR_CODE_INVALID_ARGUMENT
+            for a value outside the allowed range; ERROR_CODE_CONFIG_ERROR if
+            already connected.
+        """
+        if isinstance(frequency_hz, bool) or not isinstance(frequency_hz, int):
+            return ErrorCode.ERROR_CODE_INVALID_ARGUMENT
+        return self._sdk.set_control_and_data_frequency(frequency_hz)
+
     def set_device_ip_address(self, ip_address: str) -> ErrorCode:
         """
         Set device IP address using default netmask/gateway and wait for device acknowledgment.
@@ -1199,7 +1221,8 @@ class Rysen:
         Args:
             callback: Callback function that takes JointStates as argument (关节状态回调函数).
                      Pass None to unregister.
-            freq_hz: Callback frequency in Hz (回调频率), default: 100
+            freq_hz: Callback frequency in Hz (回调频率), default: 100. It must
+                not exceed the configured control/data loop frequency.
 
         Returns:
             ErrorCode: ERROR_CODE_OK if successful
@@ -1232,7 +1255,8 @@ class Rysen:
         Args:
             callback: Callback function that takes MotorStates as argument (电机状态回调函数).
                      Pass None to unregister.
-            freq_hz: Callback frequency in Hz (回调频率), default: 100
+            freq_hz: Callback frequency in Hz (回调频率), default: 100. It must
+                not exceed the configured control/data loop frequency.
 
         Returns:
             ErrorCode: ERROR_CODE_OK if successful
@@ -1265,7 +1289,8 @@ class Rysen:
         Args:
             callback: Callback function that takes HandSensorImage as argument (手传感器图像回调函数).
                      Pass None to unregister.
-            freq_hz: Callback frequency in Hz (回调频率), default: 100
+            freq_hz: Callback frequency in Hz (回调频率), default: 100. It must
+                not exceed the configured control/data loop frequency.
 
         Returns:
             ErrorCode: ERROR_CODE_OK if successful
